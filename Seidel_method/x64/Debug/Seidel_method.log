@@ -1,0 +1,15 @@
+﻿  Source.cpp
+C:\Users\Eugene\source\repos\SeidelMethod-main\SeidelMethod-main\Seidel_method\Source.cpp(42,31): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\Eugene\source\repos\SeidelMethod-main\SeidelMethod-main\Seidel_method\Source.cpp(42,24): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\Eugene\source\repos\SeidelMethod-main\SeidelMethod-main\Seidel_method\Source.cpp(43,26): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\Eugene\source\repos\SeidelMethod-main\SeidelMethod-main\Seidel_method\Source.cpp(43,23): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\Eugene\source\repos\SeidelMethod-main\SeidelMethod-main\Seidel_method\Source.cpp(44,22): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\Eugene\source\repos\SeidelMethod-main\SeidelMethod-main\Seidel_method\Source.cpp(44,19): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\Eugene\source\repos\SeidelMethod-main\SeidelMethod-main\Seidel_method\Source.cpp(46,21): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\Eugene\source\repos\SeidelMethod-main\SeidelMethod-main\Seidel_method\Source.cpp(46,18): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\Eugene\source\repos\SeidelMethod-main\SeidelMethod-main\Seidel_method\Source.cpp(72,78): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\Eugene\source\repos\SeidelMethod-main\SeidelMethod-main\Seidel_method\Source.cpp(72,75): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\Eugene\source\repos\SeidelMethod-main\SeidelMethod-main\Seidel_method\Source.cpp(73,89): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\Eugene\source\repos\SeidelMethod-main\SeidelMethod-main\Seidel_method\Source.cpp(73,86): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\Eugene\source\repos\SeidelMethod-main\SeidelMethod-main\Seidel_method\Source.cpp(78,19): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+  Seidel_method.vcxproj -> C:\Users\Eugene\source\repos\SeidelMethod-main\SeidelMethod-main\x64\Debug\Seidel_method.exe
