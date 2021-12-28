@@ -119,7 +119,7 @@ void FillStartSolution(double** V, int n, int m, double a, double b, double c, d
 
 void ZeidelsMethod(double** V, int n, int m, double a, double b, double c, double d, double eps, int Nmax, double& eps_max, int& S)
 {
-	double	epsCur = 0;
+	double	eps_current = 0;
 	double	a2, k2, h2;
 	double	v_old;
 	double	v_new;
@@ -143,9 +143,9 @@ void ZeidelsMethod(double** V, int n, int m, double a, double b, double c, doubl
 				v_new = v_new + f(Xi, Yj);
 				v_new = v_new / a2;
 
-				epsCur = abs(v_old - v_new);
-				if (epsCur > eps_max)
-					eps_max = epsCur;
+				eps_current = abs(v_old - v_new);
+				if (eps_current > eps_max)
+					eps_max = eps_current;
 
 				V[i][j] = v_new;
 			}
@@ -168,6 +168,7 @@ double DiscrepancyOfSolution(double** V/*, double **F,*/, int n, int m, double a
 	double  h, k;				//Шаги сетки
 	double** F;					//Правая часть СЛАУ
 	double rs = 0;				//Невязка
+	double r = 0;
 
 	h = (b - a) / n;
 	k = (d - c) / m;
@@ -179,57 +180,69 @@ double DiscrepancyOfSolution(double** V/*, double **F,*/, int n, int m, double a
 	//Заполнение вектора правой части
 	F = MemoryAllocator(n + 1, m + 1);
 	FillRightSide(F, n, m, a, c, h, k);
-
-	for (int j = 1; j < m; j++)
+	for (int i = 1; i < n; i++)
 	{
-		for (int i = 1; i < n; i++)
+		for (int j = 1; j < m; j++)
 		{
-			double r;
-			double mult;
+			r += k2 * V[i][j - 1] + h2 * V[i - 1][j] + a2 * V[i][j] + h2 * V[i + 1][j] + k2 * V[i][j + 1];
 
-			if (j != 1 && j != m - 1)
-			{
-				//Внутри блоков
-				if (i != 1 && i != n - 1)
-					mult = k2 * V[i][j - 1] + h2 * V[i - 1][j] + a2 * V[i][j] + h2 * V[i + 1][j] + k2 * V[i][j + 1];
-				else
-					if (i == 1)
-						mult = k2 * V[i][j - 1] + a2 * V[i][j] + h2 * V[i + 1][j] + k2 * V[i][j + 1];
-					else
-						if (i == n - 1)
-							mult = k2 * V[i][j - 1] + h2 * V[i - 1][j] + a2 * V[i][j] + k2 * V[i][j + 1];
-			}
-			else
-				if (j == 1)//В первом блоке
-				{
-					if (i == 1)
-						mult = a2 * V[i][j] + h2 * V[i + 1][j] + k2 * V[i][j + 1];
-					else
-						if (i != n - 1)
-							mult = h2 * V[i - 1][j] + a2 * V[i][j] + h2 * V[i + 1][j] + k2 * V[i][j + 1];
-						else
-							if (i == n - 1)
-								mult = h2 * V[i - 1][j] + a2 * V[i][j] + k2 * V[i][j + 1];
-				}
-				else
-					if (j == m - 1)//В последнем блоке
-					{
-						if (i == 1)
-							mult = k2 * V[i][j - 1] + a2 * V[i][j] + h2 * V[i + 1][j];
-						else
-							if (i != n - 1)
-								mult = k2 * V[i][j - 1] + h2 * V[i - 1][j] + a2 * V[i][j] + h2 * V[i + 1][j];
-							else
-								if (i == n - 1)
-									mult = k2 * V[i][j - 1] + h2 * V[i - 1][j] + a2 * V[i][j];
-					}
-
-			r = abs(mult - F[i][j]);
+			r = abs(r - F[i][j]);
 			rs += r * r;
 		}
 	}
 	MemoryCleaner(F, n);
+	return sqrt(r);
 
+	//for (int j = 1; j < m; j++)
+	//{
+	//	for (int i = 1; i < n; i++)
+	//	{
+	//		double r;
+	//		double mult;
+
+	//		if (j != 1 && j != m - 1)
+	//		{
+	//			//Внутри блоков
+	//			if (i != 1 && i != n - 1)
+	//				mult = k2 * V[i][j - 1] + h2 * V[i - 1][j] + a2 * V[i][j] + h2 * V[i + 1][j] + k2 * V[i][j + 1];
+	//			else
+	//				if (i == 1)
+	//					mult = k2 * V[i][j - 1] + a2 * V[i][j] + h2 * V[i + 1][j] + k2 * V[i][j + 1];
+	//				else
+	//					if (i == n - 1)
+	//						mult = k2 * V[i][j - 1] + h2 * V[i - 1][j] + a2 * V[i][j] + k2 * V[i][j + 1];
+	//		}
+	//		else
+	//			if (j == 1)//В первом блоке
+	//			{
+	//				if (i == 1)
+	//					mult = a2 * V[i][j] + h2 * V[i + 1][j] + k2 * V[i][j + 1];
+	//				else
+	//					if (i != n - 1)
+	//						mult = h2 * V[i - 1][j] + a2 * V[i][j] + h2 * V[i + 1][j] + k2 * V[i][j + 1];
+	//					else
+	//						if (i == n - 1)
+	//							mult = h2 * V[i - 1][j] + a2 * V[i][j] + k2 * V[i][j + 1];
+	//			}
+	//			else
+	//				if (j == m - 1)//В последнем блоке
+	//				{
+	//					if (i == 1)
+	//						mult = k2 * V[i][j - 1] + a2 * V[i][j] + h2 * V[i + 1][j];
+	//					else
+	//						if (i != n - 1)
+	//							mult = k2 * V[i][j - 1] + h2 * V[i - 1][j] + a2 * V[i][j] + h2 * V[i + 1][j];
+	//						else
+	//							if (i == n - 1)
+	//								mult = k2 * V[i][j - 1] + h2 * V[i - 1][j] + a2 * V[i][j];
+	//				}
+
+	//		r = abs(mult - F[i][j]);
+	//		rs += r * r;
+	//	}
+	//}
+
+	MemoryCleaner(F, n);
 	return sqrt(rs);
 }
 //Погрешность решения СЛАУ
